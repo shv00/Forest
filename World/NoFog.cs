@@ -14,23 +14,23 @@ namespace Forest.World
         {
             if(Menu.NoFog)
             {
-                this.FogColor = new Color(0f, 0f, 0f, 0f);
+                FogColor = new Color(0f, 0f, 0f, 0f);
                 if (Sunshine.Instance.Ready)
                 {
-                    Sunshine.Instance.ScatterColor = this.FogColor;
+                    Sunshine.Instance.ScatterColor = FogColor;
                 }
                 if (LocalPlayer.IsInCaves)
                 {
-                    this.FogColor = new Color(0f, 0f, 0f, 0f);
+                    FogColor = new Color(0f, 0f, 0f, 0f);
                 }
-                this.CurrentFogColor = this.FogColor;
-                Shader.SetGlobalColor("_FogColor", this.FogColor);
+                CurrentFogColor = FogColor;
+                Shader.SetGlobalColor("_FogColor", FogColor);
             }
         }
 
         public void ChangeFogAmount()
         {
-            this.FogCurrent = 300000f;
+            FogCurrent = 300000f;
             TheForestAtmosphere.Instance.FogCurrent = 300000f;
         }
     }

@@ -101,7 +101,6 @@
     <Compile Include="Loader.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Menu.cs" />
-    <Compile Include="NewMenu.cs" />
     <Compile Include="Player\HealthHack.cs" />
     <Compile Include="Player\JumpHack.cs" />
     <Compile Include="Player\SpeedHack.cs" />
@@ -113,7 +112,6 @@
     <Compile Include="Experiment\PlaneCrash.cs" />
     <Compile Include="World\ForestAtmosphere.cs" />
     <Compile Include="World\NoFog.cs" />
-    <Compile Include="World\SaveEverywhere.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

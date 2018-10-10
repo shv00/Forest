@@ -6,9 +6,6 @@ namespace Forest
 {
     public class Main : MonoBehaviour
     {
-
-        public string Version = "";
-
         private void Update()
         {
             if(UnityEngine.Input.GetKey(KeyCode.Delete))

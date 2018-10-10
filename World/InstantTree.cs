@@ -9,13 +9,15 @@ namespace Forest.Player
 {
     public class InstantTree : TreeHealth
     {
+        /*
         public void Hit()
         {
             if(Menu.InstantTree)
             {
                 Health = 1;
             }
-            this.Hit();
+            Hit();
         }
+        */
     }
 }

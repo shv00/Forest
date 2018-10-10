@@ -11,10 +11,10 @@ namespace Forest.World
             {
                 if (LocalPlayer.IsInCaves)
                 {
-                    this.CaveAddLight1 = new Color(255, 255, 255);
-                    this.CaveAddLight2 = new Color(255, 255, 255);
-                    this.CaveAddLight1Intensity = 3;
-                    this.CaveAddLight2Intensity = 3;
+                    CaveAddLight1 = new Color(255, 255, 255);
+                    CaveAddLight2 = new Color(255, 255, 255);
+                    CaveAddLight1Intensity = 3;
+                    CaveAddLight2Intensity = 3;
                 }
             }
         }

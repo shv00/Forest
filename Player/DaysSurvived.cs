@@ -6,6 +6,7 @@ namespace Forest.Player
 {
     public class DaysSurvived : MonoBehaviour
     {
+        /*
         public void Start()
         {
             float days = 20;
@@ -15,5 +16,6 @@ namespace Forest.Player
                 LocalPlayer.Stats.DaySurvived = days;
             }
         }
+        */
     }
 }

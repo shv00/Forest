@@ -23,16 +23,16 @@ namespace Forest.Experiment
                 {
                     base.StartCoroutine("lockPlayerPosition");
                 }
-                this.timmySleepGo.SetActive(true);
-                this.pmTrigger.SendEvent("begin");
+                timmySleepGo.SetActive(true);
+                pmTrigger.SendEvent("begin");
 
-                this.ScreenFlight.SetActive(false);
-                this.ScreenFlightTimmy.SetActive(false);
-                this.ScreenFlightClient.SetActive(false);
-                this.ScreenCrash.SetActive(true);
-                this.ScreenCrashTimmy.SetActive(true);
-                this.ScreenCrashClient.SetActive(true);
-                this.planeController.startCrashCameraShake();
+                ScreenFlight.SetActive(false);
+                ScreenFlightTimmy.SetActive(false);
+                ScreenFlightClient.SetActive(false);
+                ScreenCrash.SetActive(true);
+                ScreenCrashTimmy.SetActive(true);
+                ScreenCrashClient.SetActive(true);
+                planeController.startCrashCameraShake();
             }
         }
     }

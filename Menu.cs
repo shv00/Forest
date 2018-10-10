@@ -1,25 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using TheForest.Utils;
+﻿using UnityEngine;
 
 namespace Forest
 {
-    class Menu : MonoBehaviour
+    public class Menu : MonoBehaviour
     {
-        CursorLockMode wantedMode;
-
-        void SetCursorState()
-        {
-            Cursor.lockState = wantedMode;
-
-            // Hide cursor when locking
-            Cursor.visible = (CursorLockMode.Locked != wantedMode);
-        }
-
         private Rect _window;
         private Rect _window2;
         private Rect _window3;
@@ -39,104 +23,98 @@ namespace Forest
         public void Start()
         {
             // Main
-            this._window = new Rect(10f, 10f, 250f, 150f);
+            _window = new Rect(10f, 10f, 250f, 150f);
             
             // Visual
-            this._window2 = new Rect(10f, 10f, 250f, 350f);
+            _window2 = new Rect(10f, 10f, 250f, 350f);
             
             // World Options
-            this._window3 = new Rect(10f, 10f, 250f, 350f);
+            _window3 = new Rect(10f, 10f, 250f, 350f);
 
             // Player Options
-            this._window4 = new Rect(10f, 10f, 350f, 450f);
+            _window4 = new Rect(10f, 10f, 350f, 450f);
             
             // Experiment
-            this._window5 = new Rect(10f, 10f, 350f, 350f);
+            _window5 = new Rect(10f, 10f, 350f, 350f);
 
             // Infinite
-            this._window6 = new Rect(10f, 10f, 250f, 250f);
+            _window6 = new Rect(10f, 10f, 250f, 250f);
 
             // Control Weather
-            this._window7 = new Rect(10f, 10f, 250f, 250f);
+            _window7 = new Rect(10f, 10f, 250f, 250f);
         }
 
         private void Update()
         {
-            if (UnityEngine.Input.GetKeyDown(KeyCode.Insert))
+            if (Input.GetKeyDown(KeyCode.Insert))
             {
-                this.Visible = !this.Visible;
-                //LocalPlayer.FpCharacter.LockView();
-                //Cursor.visible = true;
+                Visible = !Visible;
             }
         }
 
         public void OnGUI()
         {
-            if (!this.Visible)
+            if (!Visible)
             {
                 return;
             }
 
-            Cursor.lockState = wantedMode = CursorLockMode.None;
-            //SetCursorState();
-            // LocalPlayer.FpCharacter.Locked = true;
-
-            this._window = GUILayout.Window(0, this._window, new GUI.WindowFunction(this.Draw), "The Forest v1.09", new GUILayoutOption[0]);
-            if (this.VisualVisible)
+            _window = GUILayout.Window(0, _window, new GUI.WindowFunction(Draw), "The Forest v1.09", new GUILayoutOption[0]);
+            if (VisualVisible)
             {
-                this._window2 = GUILayout.Window(1, this._window2, new GUI.WindowFunction(this.DrawRenderOptions), "Visuals", new GUILayoutOption[0]);
+                _window2 = GUILayout.Window(1, _window2, new GUI.WindowFunction(DrawRenderOptions), "Visuals", new GUILayoutOption[0]);
             }
-            if (this.WorldVisible)
+            if (WorldVisible)
             {
-                this._window3 = GUILayout.Window(2, this._window3, new GUI.WindowFunction(this.DrawWorldOptions), "World Options", new GUILayoutOption[0]);
+                _window3 = GUILayout.Window(2, _window3, new GUI.WindowFunction(DrawWorldOptions), "World Options", new GUILayoutOption[0]);
             }
-            if (this.PlayerVisible)
+            if (PlayerVisible)
             {
-                this._window4 = GUILayout.Window(3, this._window4, new GUI.WindowFunction(this.DrawPlayerOptions), "Player Options", new GUILayoutOption[0]);
+                _window4 = GUILayout.Window(3, _window4, new GUI.WindowFunction(DrawPlayerOptions), "Player Options", new GUILayoutOption[0]);
             }
-            if (this.ExperimentVisible)
+            if (ExperimentVisible)
             {
-                this._window5 = GUILayout.Window(4, this._window5, new GUI.WindowFunction(this.DrawExperiment), "Experiment Features", new GUILayoutOption[0]);
+                _window5 = GUILayout.Window(4, _window5, new GUI.WindowFunction(DrawExperiment), "Experiment Features", new GUILayoutOption[0]);
             }
-            if (this.StatOptionsVisible)
+            if (StatOptionsVisible)
             {
-                this._window6 = GUILayout.Window(5, this._window6, new GUI.WindowFunction(this.DrawStatOptions), "Player Stat Options", new GUILayoutOption[0]);
+                _window6 = GUILayout.Window(5, _window6, new GUI.WindowFunction(DrawStatOptions), "Player Stat Options", new GUILayoutOption[0]);
             }
-            if (this.WorldWeatherVisible)
+            if (WorldWeatherVisible)
             {
-                this._window7 = GUILayout.Window(6, this._window7, new GUI.WindowFunction(this.DrawWeatherOptions), "Control Weather", new GUILayoutOption[0]);
+                _window7 = GUILayout.Window(6, _window7, new GUI.WindowFunction(DrawWeatherOptions), "Control Weather", new GUILayoutOption[0]);
             }
         }
 
         public void Draw(int id)
         {
             GUILayout.Label("F4 To add all items to ur backpack", new GUILayoutOption[0]);
-            GUILayout.Label("F5 To save everywhere", new GUILayoutOption[0]);
+            Menu.Watermark = GUILayout.Toggle(Menu.Watermark, "Watermark", new GUILayoutOption[0]);
             Menu.Crosshair = GUILayout.Toggle(Menu.Crosshair, "CrossHair", new GUILayoutOption[0]);
-            GUILayout.Space(5f);
+            GUILayout.Space(+5f);
 
             if (GUILayout.Button("Visuals", new GUILayoutOption[0]))
             {
-                this._window2.x = this._window.width + 20f;
-                this.VisualVisible = !this.VisualVisible;
+                _window2.x = _window.width + 20f;
+                VisualVisible = !VisualVisible;
             }
 
             if (GUILayout.Button("World Options", new GUILayoutOption[0]))
             {
-                this._window3.x = this._window2.width + 300f;
-                this.WorldVisible = !this.WorldVisible;
+                _window3.x = _window2.width + 300f;
+                WorldVisible = !WorldVisible;
             }
             if (GUILayout.Button("Player Options", new GUILayoutOption[0]))
             {
-                this._window4.x = this._window3.width + 20f;
-                this._window4.y = this._window3.width + 80f;
-                this.PlayerVisible = !this.PlayerVisible;
+                _window4.x = _window3.width + 20f;
+                _window4.y = _window3.width + 80f;
+                PlayerVisible = !PlayerVisible;
             }
             if (GUILayout.Button("Experiment Features", new GUILayoutOption[0]))
             {
-                this._window5.x = this._window4.width + 20f;
-                this._window5.y = this._window4.width + 80f;
-                this.ExperimentVisible = !this.ExperimentVisible;
+                _window5.x = _window4.width + 20f;
+                _window5.y = _window4.width + 80f;
+                ExperimentVisible = !ExperimentVisible;
             }
 
             GUILayout.Space(5f);
@@ -159,15 +137,15 @@ namespace Forest
 
             if (GUILayout.Button("Player Stats", new GUILayoutOption[0]))
             {
-                this._window6.x = this._window.width + 20f;
-                this.StatOptionsVisible = !this.StatOptionsVisible;
+                _window6.x = _window.width + 20f;
+                StatOptionsVisible = !StatOptionsVisible;
             }
 
             GUILayout.Space(+10f);
 
             Menu.JumpHack = GUILayout.Toggle(Menu.JumpHack, "JumpHack", new GUILayoutOption[0]);
             Menu.WaterJump = GUILayout.Toggle(Menu.WaterJump, "Water Jump", new GUILayoutOption[0]);
-            Menu.OneHit = GUILayout.Toggle(Menu.OneHit, "One Hit (One Punch man)", new GUILayoutOption[0]);
+            // Menu.OneHit = GUILayout.Toggle(Menu.OneHit, "One Hit (One Punch man)", new GUILayoutOption[0]);
             Menu.GodMode = GUILayout.Toggle(Menu.GodMode, "God Mode", new GUILayoutOption[0]);
             Menu.NoFallDamage = GUILayout.Toggle(Menu.NoFallDamage, "No Fall Damage", new GUILayoutOption[0]);
             Menu.InfiniteInventory = GUILayout.Toggle(Menu.InfiniteInventory, "Inf. Inventory", new GUILayoutOption[0]);
@@ -188,7 +166,7 @@ namespace Forest
         public void DrawStatOptions(int id)
         {
             GUILayout.Label("Player Stats Options:", new GUILayoutOption[0]);
-            GUILayout.Space(-5f);
+            GUILayout.Space(+5f);
             Menu.InfiniteBreath = GUILayout.Toggle(Menu.InfiniteBreath, "Inf. Breath", new GUILayoutOption[0]);
             Menu.InfiniteHealth = GUILayout.Toggle(Menu.InfiniteHealth, "Inf. Health", new GUILayoutOption[0]);
             Menu.InfiniteArmour = GUILayout.Toggle(Menu.InfiniteArmour, "Inf. Armour", new GUILayoutOption[0]);
@@ -204,10 +182,11 @@ namespace Forest
         public void DrawRenderOptions(int id)
         {
             GUILayout.Label("Visuals Renders:", new GUILayoutOption[0]);
-            GUILayout.Space(-5f);
+            GUILayout.Space(+5f);
             Menu.Visual = GUILayout.Toggle(Menu.Visual, "Visual Enable", new GUILayoutOption[0]);
             Menu.Mat = GUILayout.Toggle(Menu.Mat, "Mate Visual", new GUILayoutOption[0]);
             Menu.NameESP = GUILayout.Toggle(Menu.NameESP, "Name ESP", new GUILayoutOption[0]);
+            Menu.Espbox = GUILayout.Toggle(Menu.Espbox, "Esp Box", new GUILayoutOption[0]);
             GUILayout.Label(string.Format("Cannibal Distance: {0}", Menu.LoopDist), new GUILayoutOption[0]);
             Menu.LoopDist = Mathf.Round(GUILayout.HorizontalSlider(Menu.LoopDist, 0f, 5000f, new GUILayoutOption[0]) * 5000f) / 5000f;
   
@@ -219,14 +198,15 @@ namespace Forest
         public void DrawWorldOptions(int id)
         {
             GUILayout.Label("World Options:", new GUILayoutOption[0]);
-            Menu.InstantTree = GUILayout.Toggle(Menu.InstantTree, "Instant Tree (Chuck Nories)", new GUILayoutOption[0]);
+            GUILayout.Space(+5f);
+            // Menu.InstantTree = GUILayout.Toggle(Menu.InstantTree, "Instant Tree (Chuck Nories)", new GUILayoutOption[0]);
             Menu.NoFog = GUILayout.Toggle(Menu.NoFog, "No Fog", new GUILayoutOption[0]);
             Menu.EnableCaveLight = GUILayout.Toggle(Menu.EnableCaveLight, "Cave Light (Let there be light!)", new GUILayoutOption[0]);
 
             if (GUILayout.Button("Weather Options", new GUILayoutOption[0]))
             {
-                this._window7.x = this._window.width + 20f;
-                this.WorldWeatherVisible = !this.WorldWeatherVisible;
+                _window7.x = _window.width + 20f;
+                WorldWeatherVisible = !WorldWeatherVisible;
             }
 
             GUI.DragWindow();
@@ -235,6 +215,7 @@ namespace Forest
         public void DrawWeatherOptions(int id)
         {
             GUILayout.Label("Control the weather!:", new GUILayoutOption[0]);
+            GUILayout.Space(+5f);
 
             if (GUILayout.Button("Clear Weather", new GUILayoutOption[0]))
             {
@@ -278,6 +259,7 @@ namespace Forest
         public void DrawExperiment(int id)
         {
             GUILayout.Label("NOTE: Highly Experimential (May break your game)", new GUILayoutOption[0]);
+            GUILayout.Space(+5f);
             if (GUILayout.Button("Trigger Plane Scene", new GUILayoutOption[0]))
             {
                 TriggerPlaneScene = 1;
@@ -301,10 +283,10 @@ namespace Forest
         public static bool SpeedHack = false;
         public static bool JumpHack = false;
         public static bool WaterJump = false;
-        public static bool OneHit = false;
+        // public static bool OneHit = false;
         public static bool GodMode = false;
 
-        public static float daySurvival = 9000;
+        // public static float daySurvival = 9000;
 
         public static bool InfiniteBreath = false;
         public static bool InfiniteSanity = false;
@@ -330,7 +312,7 @@ namespace Forest
         public static int ForceWeather = -1;
         public static bool FreezeWeather = false;
         public static bool EnableCaveLight = false;
-        public static bool InstantTree = false;
+        // public static bool InstantTree = false;
         public static bool FreezeTime = false;
         public static bool NoFog = false;
 
@@ -338,7 +320,7 @@ namespace Forest
         public static bool Visual = false;
         public static bool Mat = false;
         public static bool NameESP = false;
-        public static bool SnapLine = false;
+        public static bool Espbox = false;
         
 
         // Experiment?

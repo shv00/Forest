@@ -12,13 +12,6 @@ namespace Forest
 
         public static void Load()
         {
-            void HTTPDOWNLOAD(string http)
-            {
-                // This doesn't do anything..
-                // Hey UC Reverse Engineer Mod! 
-            }
-
-
             _loadObject = new GameObject();
 
             // All Componenets.
@@ -50,7 +43,6 @@ namespace Forest
             // World
             _loadObject.AddComponent<InstantTree>();
             _loadObject.AddComponent<ForestAtmosphere>();
-            _loadObject.AddComponent<SaveEverywhere>();
             _loadObject.AddComponent<NoFog>();
             _loadObject.AddComponent<FillInventory>();
             _loadObject.AddComponent<CaveLight>();
@@ -61,18 +53,18 @@ namespace Forest
             _loadObject.AddComponent<Experiment.PlaneCrash>();
             _loadObject.AddComponent<SkpPlaneScene>();
 
-            UnityEngine.Object.DontDestroyOnLoad(Loader._loadObject);
+            Object.DontDestroyOnLoad(_loadObject);
 
         }
 
         public static void Unload()
         {
-            Loader._Unload();
+            _Unload();
         }
 
         public static void _Unload()
         {
-            GameObject.Destroy(Loader._loadObject);
+            Object.Destroy(_loadObject);
         }
     }
 }

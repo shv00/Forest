@@ -20,26 +20,26 @@ namespace Forest.World
             {
                 if(Menu.ForceWeather >= 0)
                 {
-                    this.AllOff();
+                    AllOff();
                     Scene.RainFollowGO.SetActive(true);
                     Scene.RainTypes.SnowConstant.SetActive(false);
 
                     if(Menu.ForceWeather == 1 )
                     {
-                        this.TurnOn(WeatherSystem.RainTypes.Light);
+                        TurnOn(WeatherSystem.RainTypes.Light);
                     }
                     if(Menu.ForceWeather == 2)
                     {
-                        this.TurnOn(WeatherSystem.RainTypes.Medium);
+                        TurnOn(WeatherSystem.RainTypes.Medium);
                     }
                     if (Menu.ForceWeather == 3)
                     {
-                        this.TurnOn(WeatherSystem.RainTypes.Heavy);
+                        TurnOn(WeatherSystem.RainTypes.Heavy);
                     }
                     if (Menu.ForceWeather == 4)
                     {
-                        this.GrowClouds();
-                        this.ReduceClouds();
+                        GrowClouds();
+                        ReduceClouds();
                     }
                     if (Menu.ForceWeather == 5)
                     {

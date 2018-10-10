@@ -9,8 +9,8 @@ namespace Forest.Experiment
         {
             if (Menu.TriggerEffigy)
             {
-                this.lightBool = true;
-                this.lightEvent = "event:/fire/fire_built_start";
+                lightBool = true;
+                lightEvent = "event:/fire/fire_built_start";
             }
         }
     }
