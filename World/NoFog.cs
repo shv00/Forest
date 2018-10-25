@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TheForest.Utils;
+﻿using TheForest.Utils;
 using UnityEngine;
 
 namespace Forest.World
@@ -12,7 +7,7 @@ namespace Forest.World
     {
         public void Update()
         {
-            if(Menu.NoFog)
+            if(Menu.NoFog && LocalPlayer.IsInWorld)
             {
                 FogColor = new Color(0f, 0f, 0f, 0f);
                 if (Sunshine.Instance.Ready)
@@ -31,7 +26,7 @@ namespace Forest.World
         public void ChangeFogAmount()
         {
             FogCurrent = 300000f;
-            TheForestAtmosphere.Instance.FogCurrent = 300000f;
+            Instance.FogCurrent = 300000f;
         }
     }
 }

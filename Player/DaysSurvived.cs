@@ -6,16 +6,29 @@ namespace Forest.Player
 {
     public class DaysSurvived : MonoBehaviour
     {
-        /*
-        public void Start()
+
+        private float baseDaysSurvived;
+
+        private void GameStandardValues()
         {
-            float days = 20;
-            
-            if (days < Menu.daySurvival)
+            baseDaysSurvived = LocalPlayer.Stats.DaySurvived;
+        }
+
+        private void Start()
+        {
+            GameStandardValues();
+        }
+
+        private void Update()
+        {   
+            if (Menu.DaysSurvivedActivate)
             {
-                LocalPlayer.Stats.DaySurvived = days;
+                LocalPlayer.Stats.DaySurvived = baseDaysSurvived * Menu.DaysSurvived;
+            } else
+            {
+                GameStandardValues();
             }
         }
-        */
+        
     }
 }

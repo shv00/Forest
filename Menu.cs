@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using TheForest.Utils;
 
 namespace Forest
 {
@@ -11,6 +12,7 @@ namespace Forest
         private Rect _window5;
         private Rect _window6;
         private Rect _window7;
+        private Rect _window8;
 
         public bool Visible = true;
         public bool VisualVisible = false;
@@ -19,6 +21,7 @@ namespace Forest
         public bool ExperimentVisible = false;
         public bool StatOptionsVisible = false;
         public bool WorldWeatherVisible = false;
+        public bool NetworkVisible = false;
 
         public void Start()
         {
@@ -42,14 +45,30 @@ namespace Forest
 
             // Control Weather
             _window7 = new Rect(10f, 10f, 250f, 250f);
+
+            // Network
+            _window8 = new Rect(10f, 10f, 250f, 250f);
+        }
+
+        private void ToggleMenu()
+        {
+            if (UnityEngine.Input.GetKeyDown(KeyCode.Insert))
+            {
+                if (Visible)
+                {
+                    LocalPlayer.FpCharacter.UnLockView();
+                }
+                else
+                {
+                    LocalPlayer.FpCharacter.LockView(true);
+                }
+                Visible = !Visible;
+            }
         }
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Insert))
-            {
-                Visible = !Visible;
-            }
+            ToggleMenu();
         }
 
         public void OnGUI()
@@ -84,13 +103,18 @@ namespace Forest
             {
                 _window7 = GUILayout.Window(6, _window7, new GUI.WindowFunction(DrawWeatherOptions), "Control Weather", new GUILayoutOption[0]);
             }
+            if (NetworkVisible)
+            {
+                _window8 = GUILayout.Window(7, _window8, new GUI.WindowFunction(DrawNetworkOptions), "Online", new GUILayoutOption[0]);
+            }
         }
 
         public void Draw(int id)
         {
             GUILayout.Label("F4 To add all items to ur backpack", new GUILayoutOption[0]);
-            Menu.Watermark = GUILayout.Toggle(Menu.Watermark, "Watermark", new GUILayoutOption[0]);
-            Menu.Crosshair = GUILayout.Toggle(Menu.Crosshair, "CrossHair", new GUILayoutOption[0]);
+            GUILayout.Label("F5 To save without sleeping place", new GUILayoutOption[0]);
+            Watermark = GUILayout.Toggle(Watermark, "Watermark", new GUILayoutOption[0]);
+            Crosshair = GUILayout.Toggle(Crosshair, "CrossHair", new GUILayoutOption[0]);
             GUILayout.Space(+5f);
 
             if (GUILayout.Button("Visuals", new GUILayoutOption[0]))
@@ -101,7 +125,7 @@ namespace Forest
 
             if (GUILayout.Button("World Options", new GUILayoutOption[0]))
             {
-                _window3.x = _window2.width + 300f;
+                _window3.x = _window2.width + 20f;
                 WorldVisible = !WorldVisible;
             }
             if (GUILayout.Button("Player Options", new GUILayoutOption[0]))
@@ -109,6 +133,12 @@ namespace Forest
                 _window4.x = _window3.width + 20f;
                 _window4.y = _window3.width + 80f;
                 PlayerVisible = !PlayerVisible;
+            }
+            if (GUILayout.Button("Online Servers", new GUILayoutOption[0]))
+            {
+                _window6.x = _window5.width + 20f;
+                _window6.y = _window5.width + 80f;
+                NetworkVisible = !NetworkVisible;
             }
             if (GUILayout.Button("Experiment Features", new GUILayoutOption[0]))
             {
@@ -127,13 +157,16 @@ namespace Forest
             GUI.DragWindow();
         }
 
+
+        public static float SpeedMultiplier = 1f;
+        public static float JumpMultiplier = 1f;
+        public static int DaysSurvived = 1;
+        public static bool DaysSurvivedActivate = false;
+
         public void DrawPlayerOptions(int id)
         {
             GUILayout.Label("Player Options:", new GUILayoutOption[0]);
             GUILayout.Space(+5f);
-
-            GUILayout.Label("(Dont hold shift while you speed around)", new GUILayoutOption[0]);
-            Menu.SpeedHack = GUILayout.Toggle(Menu.SpeedHack, "Speedhack", new GUILayoutOption[0]);
 
             if (GUILayout.Button("Player Stats", new GUILayoutOption[0]))
             {
@@ -143,20 +176,28 @@ namespace Forest
 
             GUILayout.Space(+10f);
 
-            Menu.JumpHack = GUILayout.Toggle(Menu.JumpHack, "JumpHack", new GUILayoutOption[0]);
-            Menu.WaterJump = GUILayout.Toggle(Menu.WaterJump, "Water Jump", new GUILayoutOption[0]);
-            // Menu.OneHit = GUILayout.Toggle(Menu.OneHit, "One Hit (One Punch man)", new GUILayoutOption[0]);
-            Menu.GodMode = GUILayout.Toggle(Menu.GodMode, "God Mode", new GUILayoutOption[0]);
-            Menu.NoFallDamage = GUILayout.Toggle(Menu.NoFallDamage, "No Fall Damage", new GUILayoutOption[0]);
-            Menu.InfiniteInventory = GUILayout.Toggle(Menu.InfiniteInventory, "Inf. Inventory", new GUILayoutOption[0]);
+            SpeedHack = GUILayout.Toggle(SpeedHack, "Speedhack", new GUILayoutOption[0]);
+            SpeedMultiplier = Mathf.Round(GUILayout.HorizontalSlider(SpeedMultiplier, 0f, 50f, new GUILayoutOption[0]) * 50f) / 50f;
+            JumpHack = GUILayout.Toggle(JumpHack, "JumpHack", new GUILayoutOption[0]);
+            JumpMultiplier = Mathf.Round(GUILayout.HorizontalSlider(JumpMultiplier, 0f, 50f, new GUILayoutOption[0]) * 50f) / 50f;
+
+            DaysSurvivedActivate = GUILayout.Toggle(DaysSurvivedActivate, "Change Days Survived", new GUILayoutOption[0]);
+            GUILayout.Label(string.Format("Days Survived: {0}", DaysSurvived), new GUILayoutOption[0]);
+            DaysSurvived = Mathf.RoundToInt(GUILayout.HorizontalSlider(DaysSurvived, 1, 5000, new GUILayoutOption[0]) * 5000 / 5000);
+
+
+            WaterJump = GUILayout.Toggle(WaterJump, "Water Jump", new GUILayoutOption[0]);
+            NoDamage = GUILayout.Toggle(NoDamage, "God Mode", new GUILayoutOption[0]);
+            NoFallDamage = GUILayout.Toggle(NoFallDamage, "No Fall Damage", new GUILayoutOption[0]);
+            InfiniteInventory = GUILayout.Toggle(InfiniteInventory, "Inf. Inventory", new GUILayoutOption[0]);
 
             GUILayout.Space(+5f);
             GUILayout.Label("Sets Sanity to 100%, Disables Effigy Tab Access ", new GUILayoutOption[0]);
-            Menu.InfiniteSanity = GUILayout.Toggle(Menu.InfiniteSanity, "Inf. Sanity", new GUILayoutOption[0]);
+            InfiniteSanity = GUILayout.Toggle(InfiniteSanity, "Inf. Sanity", new GUILayoutOption[0]);
 
             GUILayout.Space(+5f);
             GUILayout.Label("Sets Sanity to 89% all time. Disables Infinite Sanity ", new GUILayoutOption[0]);
-            Menu.EffigyAccess = GUILayout.Toggle(Menu.EffigyAccess, "Effigy Tab Access", new GUILayoutOption[0]);
+            EffigyAccess = GUILayout.Toggle(EffigyAccess, "Effigy Tab Access", new GUILayoutOption[0]);
             GUILayout.Space(+5f);
 
             GUI.DragWindow();
@@ -167,14 +208,14 @@ namespace Forest
         {
             GUILayout.Label("Player Stats Options:", new GUILayoutOption[0]);
             GUILayout.Space(+5f);
-            Menu.InfiniteBreath = GUILayout.Toggle(Menu.InfiniteBreath, "Inf. Breath", new GUILayoutOption[0]);
-            Menu.InfiniteHealth = GUILayout.Toggle(Menu.InfiniteHealth, "Inf. Health", new GUILayoutOption[0]);
-            Menu.InfiniteArmour = GUILayout.Toggle(Menu.InfiniteArmour, "Inf. Armour", new GUILayoutOption[0]);
-            Menu.InfiniteColdArmor = GUILayout.Toggle(Menu.InfiniteColdArmor, "Inf. Cold Armor", new GUILayoutOption[0]);
-            Menu.NoThirsty = GUILayout.Toggle(Menu.NoThirsty, "Inf. Thirst", new GUILayoutOption[0]);
-            Menu.InfiniteEnergy = GUILayout.Toggle(Menu.InfiniteEnergy, "Inf. Energy", new GUILayoutOption[0]);
-            Menu.InfiniteStamina = GUILayout.Toggle(Menu.InfiniteStamina, "Inf. Stamina", new GUILayoutOption[0]);
-            Menu.NoStarvation = GUILayout.Toggle(Menu.NoStarvation, "No Starve", new GUILayoutOption[0]);
+            InfiniteBreath = GUILayout.Toggle(InfiniteBreath, "Inf. Breath", new GUILayoutOption[0]);
+            InfiniteHealth = GUILayout.Toggle(InfiniteHealth, "Inf. Health", new GUILayoutOption[0]);
+            InfiniteArmour = GUILayout.Toggle(InfiniteArmour, "Inf. Armour", new GUILayoutOption[0]);
+            InfiniteColdArmor = GUILayout.Toggle(InfiniteColdArmor, "Inf. Cold Armor", new GUILayoutOption[0]);
+            NoThirsty = GUILayout.Toggle(NoThirsty, "Inf. Thirst", new GUILayoutOption[0]);
+            InfiniteEnergy = GUILayout.Toggle(InfiniteEnergy, "Inf. Energy", new GUILayoutOption[0]);
+            InfiniteStamina = GUILayout.Toggle(InfiniteStamina, "Inf. Stamina", new GUILayoutOption[0]);
+            NoStarvation = GUILayout.Toggle(NoStarvation, "No Starve", new GUILayoutOption[0]);
 
             GUI.DragWindow();
         }
@@ -183,25 +224,45 @@ namespace Forest
         {
             GUILayout.Label("Visuals Renders:", new GUILayoutOption[0]);
             GUILayout.Space(+5f);
-            Menu.Visual = GUILayout.Toggle(Menu.Visual, "Visual Enable", new GUILayoutOption[0]);
-            Menu.Mat = GUILayout.Toggle(Menu.Mat, "Mate Visual", new GUILayoutOption[0]);
-            Menu.NameESP = GUILayout.Toggle(Menu.NameESP, "Name ESP", new GUILayoutOption[0]);
-            Menu.Espbox = GUILayout.Toggle(Menu.Espbox, "Esp Box", new GUILayoutOption[0]);
-            GUILayout.Label(string.Format("Cannibal Distance: {0}", Menu.LoopDist), new GUILayoutOption[0]);
-            Menu.LoopDist = Mathf.Round(GUILayout.HorizontalSlider(Menu.LoopDist, 0f, 5000f, new GUILayoutOption[0]) * 5000f) / 5000f;
+            Visual = GUILayout.Toggle(Visual, "Visual Enable", new GUILayoutOption[0]);
+            NameESP = GUILayout.Toggle(NameESP, "Name ESP", new GUILayoutOption[0]);
+            GUILayout.Label(string.Format("Cannibal Distance: {0}", LoopDist), new GUILayoutOption[0]);
+            LoopDist = Mathf.Round(GUILayout.HorizontalSlider(LoopDist, 0f, 5000f, new GUILayoutOption[0]) * 5000f) / 5000f;
   
 
             GUI.DragWindow();
         }
 
+        public void Cave(bool inCave)
+        {
+            if (inCave && !LocalPlayer.IsInCaves)
+            {
+                LocalPlayer.GameObject.SendMessage("InACave");
+            }
+            else if (!inCave && LocalPlayer.IsInCaves)
+            {
+                LocalPlayer.GameObject.SendMessage("NotInCave");
+            }
+        }
 
+        public static float CaveLight = 1f;
         public void DrawWorldOptions(int id)
         {
             GUILayout.Label("World Options:", new GUILayoutOption[0]);
             GUILayout.Space(+5f);
-            // Menu.InstantTree = GUILayout.Toggle(Menu.InstantTree, "Instant Tree (Chuck Nories)", new GUILayoutOption[0]);
-            Menu.NoFog = GUILayout.Toggle(Menu.NoFog, "No Fog", new GUILayoutOption[0]);
-            Menu.EnableCaveLight = GUILayout.Toggle(Menu.EnableCaveLight, "Cave Light (Let there be light!)", new GUILayoutOption[0]);
+            // InstantBuild = GUILayout.Toggle(InstantBuild, "Instant Build", new GUILayoutOption[0]);
+            NoFog = GUILayout.Toggle(NoFog, "No Fog", new GUILayoutOption[0]);
+
+            EnableCaveLight = GUILayout.Toggle(EnableCaveLight, "Cave Light (Let there be light!)", new GUILayoutOption[0]);
+            GUILayout.Label(string.Format("Cave Light Intensity: {0}", CaveLight), new GUILayoutOption[0]);
+            CaveLight = Mathf.Round(GUILayout.HorizontalSlider(CaveLight, 1f, 50f, new GUILayoutOption[0]) * 50f / 50f);
+
+            if (GUILayout.Button("Go to Cave", new GUILayoutOption[0]))
+            {
+                Cave(true);
+            }
+
+            GUILayout.Space(+10f);
 
             if (GUILayout.Button("Weather Options", new GUILayoutOption[0]))
             {
@@ -264,14 +325,47 @@ namespace Forest
             {
                 TriggerPlaneScene = 1;
             }
-            Menu.TriggerEndGame = GUILayout.Toggle(Menu.TriggerEndGame, "Trigger End Game", new GUILayoutOption[0]);
-            Menu.TriggerEffigy = GUILayout.Toggle(Menu.TriggerEffigy, "TriggerEffigy", new GUILayoutOption[0]);
-            Menu.TriggerSkipPlaneScene = GUILayout.Toggle(Menu.TriggerSkipPlaneScene, "Skip Plane Scene", new GUILayoutOption[0]);
-            Menu.Flying = GUILayout.Toggle(Menu.Flying, "Fly around", new GUILayoutOption[0]);
-
 
             GUI.DragWindow();
         }
+
+        public static bool DisableMutantController = false;
+
+        public void DrawNetworkOptions(int id)
+        {
+            GUILayout.Label("Network ", new GUILayoutOption[0]);
+            GUILayout.Space(+5f);
+
+            // InstantDestory = GUILayout.Toggle(InstantDestory, "Instant Destory Buildings", new GUILayoutOption[0]);
+            DisableMutantController = GUILayout.Toggle(DisableMutantController, "Disable Mutant Controller", new GUILayoutOption[0]);
+
+            if (GUILayout.Button("Kill yourself", new GUILayoutOption[0]))
+            {
+                Network.KillPlayer.KillYourself();
+            }
+
+            if (GUILayout.Button("Kill all enemies", new GUILayoutOption[0]))
+            {
+                Network.KillAllEnemies.KillAll();
+            }
+
+            if (GUILayout.Button("Kill all animals", new GUILayoutOption[0]))
+            {
+                Network.KillAllAnimals.KillAll();
+            }
+
+            if (GUILayout.Button("Kill End Boss", new GUILayoutOption[0]))
+            {
+                Network.KillAllAnimals.KillAll();
+            }
+
+            GUI.DragWindow();
+        }
+
+        // Testing
+        public static bool InstantDestory = false;
+        public static bool InstantBuild = false;
+
 
         // The Forest
         public static bool Crosshair = true;
@@ -283,8 +377,10 @@ namespace Forest
         public static bool SpeedHack = false;
         public static bool JumpHack = false;
         public static bool WaterJump = false;
-        // public static bool OneHit = false;
-        public static bool GodMode = false;
+         public static bool OneHit = false;
+        public static bool NoDamage = false;
+
+        public static bool EasyBuild = false;
 
         // public static float daySurvival = 9000;
 
@@ -312,7 +408,7 @@ namespace Forest
         public static int ForceWeather = -1;
         public static bool FreezeWeather = false;
         public static bool EnableCaveLight = false;
-        // public static bool InstantTree = false;
+        public static bool InstantTree = false;
         public static bool FreezeTime = false;
         public static bool NoFog = false;
 

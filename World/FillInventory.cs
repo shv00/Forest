@@ -1,7 +1,5 @@
 ﻿using TheForest.Items;
-using TheForest.Items.Craft;
 using TheForest.Utils;
-using TheForest.Items.Inventory;
 using UnityEngine;
 
 namespace Forest.World
@@ -10,24 +8,26 @@ namespace Forest.World
     {
         public void Update()
         {
-            if (UnityEngine.Input.GetKeyDown(KeyCode.F4))
-            {
-                for (int i = 0; i < ItemDatabase.Items.Length; i++)
+
+                if (UnityEngine.Input.GetKeyDown(KeyCode.F4) && LocalPlayer.IsInWorld)
                 {
-                    Item item = ItemDatabase.Items[i];
-                    try
+                    for (int i = 0; i < ItemDatabase.Items.Length; i++)
                     {
-                        if(item._maxAmount >= 0)
+                        Item item = ItemDatabase.Items[i];
+                        try
                         {
-                            LocalPlayer.Inventory.AddItem(item._id, 2000 - LocalPlayer.Inventory.AmountOf(item._id, true), true, false, null);
+                            if (item._maxAmount >= 0)
+                            {
+                                LocalPlayer.Inventory.AddItem(item._id, 2000 - LocalPlayer.Inventory.AmountOf(item._id, true), true, false, null);
+                            }
+                        }
+                        catch (System.Exception)
+                        {
+                            // Do nothing??
                         }
                     }
-                    catch(System.Exception)
-                    {
-                        GUI.Label(new Rect(20, 20, 200, 200), "ERROR: Items..");
-                    }
                 }
-            }
+            
         }
     }
 }

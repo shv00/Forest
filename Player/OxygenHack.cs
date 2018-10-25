@@ -5,9 +5,9 @@ namespace Forest.Player
 {
     public class OxygenHack : MonoBehaviour
     {
-        public void Update()
+        private void Update()
         {
-            if (Menu.InfiniteBreath)
+            if (Menu.InfiniteBreath && LocalPlayer.IsInWorld)
             {
                 LocalPlayer.Stats.AirBreathing.TakingDamage = false;
                 LocalPlayer.Stats.AirBreathing.CurrentLungAir = 9000f;

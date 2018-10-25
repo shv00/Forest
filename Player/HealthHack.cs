@@ -5,9 +5,9 @@ namespace Forest.Player
 {
     public class HealthHack : MonoBehaviour
     {
-        public void Update()
+        private void Update()
         {
-            if (Menu.InfiniteHealth)
+            if (Menu.InfiniteHealth && LocalPlayer.IsInWorld)
             {
                 LocalPlayer.Stats.Health = 100;
             }

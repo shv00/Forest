@@ -13,12 +13,12 @@ namespace Forest.Experiment
     {
         public void Update()
         {
-            if(Menu.TriggerSkipPlaneScene)
+            if (!skipOpening && Clock.planecrash)
             {
                 SpaceTut.SetActive(false);
                 LightsFlight.SetActive(false);
                 pmTrigger.SendEvent("toSkipOpening");
-                //skipOpening(true);
+                // skipOpening = true;
             }
             else
             {

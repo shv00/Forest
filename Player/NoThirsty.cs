@@ -1,14 +1,13 @@
 ﻿using UnityEngine;
 using TheForest.Utils;
 
-
 namespace Forest.Player
 {
     public class NoThirsty : MonoBehaviour
     {
-        public void Update()
+        private void Update()
         {
-            if(Menu.NoThirsty)
+            if(Menu.NoThirsty && LocalPlayer.IsInWorld)
             {
                 LocalPlayer.Stats.Thirst = 0f;
             }

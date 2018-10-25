@@ -7,7 +7,7 @@ namespace Forest.Player
     {
         public void Update()
         {
-            if (Menu.EffigyAccess)
+            if (Menu.EffigyAccess && LocalPlayer.IsInWorld)
             {
                 Menu.InfiniteSanity = false;
 

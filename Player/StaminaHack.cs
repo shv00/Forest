@@ -5,9 +5,9 @@ namespace Forest.Player
 {
     public class StaminaHack : MonoBehaviour
     {
-        public void Update()
+        private void Update()
         {
-            if (Menu.InfiniteStamina)
+            if (Menu.InfiniteStamina && LocalPlayer.IsInWorld)
             {
                 LocalPlayer.Stats.Stamina = 100f;
 

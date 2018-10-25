@@ -5,9 +5,9 @@ namespace Forest.Player
 {
     public class WaterJump : MonoBehaviour
     {
-        public void Update()
+        private void Update()
         {
-            if (Menu.WaterJump)
+            if (Menu.WaterJump && LocalPlayer.IsInWorld)
             {
                 LocalPlayer.FpCharacter.allowWaterJump = true;
             }

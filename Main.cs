@@ -1,5 +1,4 @@
-﻿using Forest;
-using UnityEngine;
+﻿using UnityEngine;
 using TheForest.Utils;
 
 namespace Forest
@@ -16,20 +15,17 @@ namespace Forest
 
         private void OnGUI()
         {
-            if(Menu.Watermark)
+            if (LocalPlayer.IsInWorld)
             {
-                if (LocalPlayer.IsInWorld)
+                if(Menu.Watermark)
                 {
-                    GUI.Label(new Rect(20, 20, 200, 60), "Unknowncheats.me | Shv00");
+                    GUI.Label(new Rect(20, 20, 200, 60), "UnKnoWnCheaTs.me | Shv00");
                 }
-            }
 
-            if(LocalPlayer.IsInWorld)
-            {
                 if (Menu.Crosshair)
                 {
-                    Render.DrawBox(new Vector2((float)Screen.width / 2f, (float)Screen.height / 2f - 7f), new Vector2(1, 15), Color.green);
-                    Render.DrawBox(new Vector2((float)Screen.width / 2f - 7f, (float)Screen.height / 2f), new Vector2(15, 1), Color.green);
+                    Render.DrawBox(new Vector2(Screen.width / 2f, Screen.height / 2f - 7f), new Vector2(1, 15), Color.green);
+                    Render.DrawBox(new Vector2(Screen.width / 2f - 7f, Screen.height / 2f), new Vector2(15, 1), Color.green);
                 }
             }
         }

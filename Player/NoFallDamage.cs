@@ -7,7 +7,7 @@ namespace Forest.Player
     {
         public void Update()
         {
-            if (Menu.NoFallDamage)
+            if (Menu.NoFallDamage && LocalPlayer.IsInWorld)
             {
                 LocalPlayer.FpCharacter.allowFallDamage = false;
             }

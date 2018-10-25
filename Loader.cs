@@ -2,6 +2,8 @@
 using Forest.Experiment;
 using Forest.Visual;
 using Forest.World;
+using Forest.Network;
+using Forest.Game;
 using UnityEngine;
 
 namespace Forest
@@ -34,23 +36,32 @@ namespace Forest
             _loadObject.AddComponent<EnergyHack>();
             _loadObject.AddComponent<InventoryHack>();
             _loadObject.AddComponent<WaterJump>();
-            _loadObject.AddComponent<GodMode>();
+            _loadObject.AddComponent<NoDamage>();
 
             // Visual   
             _loadObject.AddComponent<CannibalNameESP>();
-            _loadObject.AddComponent<MatVisual>();
 
             // World
-            _loadObject.AddComponent<InstantTree>();
             _loadObject.AddComponent<ForestAtmosphere>();
             _loadObject.AddComponent<NoFog>();
             _loadObject.AddComponent<FillInventory>();
             _loadObject.AddComponent<CaveLight>();
+            _loadObject.AddComponent<Enemies>();
+            //_loadObject.AddComponent<InstantBuild>();
+
+            // Online
+            _loadObject.AddComponent<KillAllEnemies>();
+            // _loadObject.AddComponent<InstantDestory>();
+            _loadObject.AddComponent<KillAllEnemies>();
+            _loadObject.AddComponent<KillAllAnimals>();
+            _loadObject.AddComponent<KillEndBoss>();
+            _loadObject.AddComponent<DisableMutantController>();
+            _loadObject.AddComponent<KillPlayer>();
+
+            // Game
+            _loadObject.AddComponent<Save>();
 
             // Experiment
-            _loadObject.AddComponent<Effigy>();
-            _loadObject.AddComponent<EndGame>();
-            _loadObject.AddComponent<Experiment.PlaneCrash>();
             _loadObject.AddComponent<SkpPlaneScene>();
 
             Object.DontDestroyOnLoad(_loadObject);

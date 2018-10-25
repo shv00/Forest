@@ -6,9 +6,9 @@ namespace Forest.Player
 {
     public class SanityHack : MonoBehaviour
     {
-        public void Update()
+        private void Update()
         {
-            if (Menu.InfiniteSanity)
+            if (Menu.InfiniteSanity && LocalPlayer.IsInWorld)
             {
                 Menu.EffigyAccess = false;
 

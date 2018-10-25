@@ -7,7 +7,7 @@ namespace Forest.Player
     {
         public void Update()
         {
-            if (Menu.InfiniteArmour)
+            if (Menu.InfiniteArmour && LocalPlayer.IsInWorld)
             {
                 LocalPlayer.Stats.ColdArmor = 100;
             }

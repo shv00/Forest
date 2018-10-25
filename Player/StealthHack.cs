@@ -5,9 +5,9 @@ namespace Forest.Player
 {
     public class StealthHack : MonoBehaviour
     {
-        public void Update()
+        private void Update()
         {
-            if (Menu.InfiniteEnergy)
+            if (Menu.InfiniteEnergy && LocalPlayer.IsInWorld)
             {
                 LocalPlayer.Stats.Stealth = 100f;
             }

@@ -7,7 +7,7 @@ namespace Forest.Player
     {
         public void Update()
         {
-            if (Menu.NoStarvation)
+            if (Menu.NoStarvation && LocalPlayer.IsInWorld)
             {
                 LocalPlayer.Stats.Fullness = 100f;
                 LocalPlayer.Stats.StarvationCurrentDuration = 0f;

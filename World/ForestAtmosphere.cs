@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using TheForest.Utils;
+﻿using TheForest.Utils;
 using TheForest.World;
 
 namespace Forest.World
@@ -16,9 +15,7 @@ namespace Forest.World
 
         public void Update()
         {
-            if (LocalPlayer.IsInWorld)
-            {
-                if(Menu.ForceWeather >= 0)
+                if(Menu.ForceWeather >= 0 && LocalPlayer.IsInWorld)
                 {
                     AllOff();
                     Scene.RainFollowGO.SetActive(true);
@@ -26,15 +23,15 @@ namespace Forest.World
 
                     if(Menu.ForceWeather == 1 )
                     {
-                        TurnOn(WeatherSystem.RainTypes.Light);
+                        TurnOn(RainTypes.Light);
                     }
                     if(Menu.ForceWeather == 2)
                     {
-                        TurnOn(WeatherSystem.RainTypes.Medium);
+                        TurnOn(RainTypes.Medium);
                     }
                     if (Menu.ForceWeather == 3)
                     {
-                        TurnOn(WeatherSystem.RainTypes.Heavy);
+                        TurnOn(RainTypes.Heavy);
                     }
                     if (Menu.ForceWeather == 4)
                     {
@@ -57,7 +54,7 @@ namespace Forest.World
                     Menu.ForceWeather = -1;
 
                 }
-            }
+          
         }
     }
 }

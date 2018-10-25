@@ -7,7 +7,7 @@ namespace Forest.Player
     {
         public void Update()
         {
-            if (Menu.InfiniteEnergy)
+            if (Menu.InfiniteEnergy && LocalPlayer.IsInWorld)
             {
                 LocalPlayer.Stats.Energy = 100f;
             }

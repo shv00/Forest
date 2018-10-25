@@ -20,10 +20,9 @@ namespace Forest.Visual
         {
             if (Menu.Visual == true)
             {
-                if (Menu.NameESP)
+                if (Menu.NameESP && LocalPlayer.IsInWorld)
                 {
-                    if (LocalPlayer.IsInWorld)
-                    {
+
                             foreach (GameObject cannibals in Scene.MutantControler.activeWorldCannibals)
                             {
                                 DrawESP(cannibals.transform);
@@ -51,7 +50,7 @@ namespace Forest.Visual
                             foreach (GameObject cannibals in Scene.MutantControler.activeSkinnyCannibals)
                             {
                                 DrawESP(cannibals.transform);
-                        }
+ 
                     }
                 }
             }

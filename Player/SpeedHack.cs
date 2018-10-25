@@ -5,31 +5,53 @@ namespace Forest.Player
 {
     public class SpeedHack : MonoBehaviour
     {
-        public float WalkSpeed = 8f; // 5f before
-        public float RunSpeed = 16f * Mathf.Min(1f + (float)LocalPlayer.Stats.Skills.AthleticismSkillLevel * 0.05f, 1.3f);
-        public float CrouchSpeed = 2f * 1.75f * Mathf.Min(1f + (float)LocalPlayer.Stats.Skills.AthleticismSkillLevel * 0.01f, 1.85f);
-        //public float strafeSpeed = 4f;
-        public float SwimSpeed = 6f;
 
-        public void Update()
+        private float baseWalkSpeed;
+        private float baseRunSpeed;
+        private float baseJumpHeight;
+        private float baseCrouchSpeed;
+        // private float baseStrafeSpeed;
+        private float baseSwimmingSpeed;
+        private float baseGravity;
+        private float baseMaxVelocityChange;
+        private float baseMaximumVelocity;
+        private float baseMaxSwimVelocity;
+
+        private void GameStandardValues()
         {
-            if( Menu.SpeedHack == true)
+            baseMaxSwimVelocity = LocalPlayer.FpCharacter.maxSwimVelocity;
+            baseWalkSpeed = LocalPlayer.FpCharacter.walkSpeed;
+            baseRunSpeed = LocalPlayer.FpCharacter.runSpeed;
+            baseJumpHeight = LocalPlayer.FpCharacter.jumpHeight;
+            baseCrouchSpeed = LocalPlayer.FpCharacter.crouchSpeed;
+            // baseStrafeSpeed = LocalPlayer.FpCharacter.strafeSpeed;
+            baseSwimmingSpeed = LocalPlayer.FpCharacter.swimmingSpeed;
+            baseMaxVelocityChange = LocalPlayer.FpCharacter.maxVelocityChange;
+            baseMaximumVelocity = LocalPlayer.FpCharacter.maximumVelocity;
+            baseGravity = LocalPlayer.FpCharacter.gravity;
+        }
+
+        private void Start()
+        {
+            GameStandardValues();
+        }
+
+        private void Update()
+        {
+            if(Menu.SpeedHack && LocalPlayer.IsInWorld)
             {
-                LocalPlayer.FpCharacter.walkSpeed = WalkSpeed * 20f;
-                LocalPlayer.FpCharacter.runSpeed = RunSpeed * 20f;
-                LocalPlayer.FpCharacter.swimmingSpeed = SwimSpeed * 20f;
-                //LocalPlayer.FpCharacter.strafeSpeed = strafeSpeed * 100f;
-                LocalPlayer.FpCharacter.crouchSpeed = CrouchSpeed * 20f;
-            }
-            else
+                LocalPlayer.FpCharacter.walkSpeed = baseWalkSpeed * Menu.SpeedMultiplier;
+                LocalPlayer.FpCharacter.runSpeed = baseRunSpeed * Menu.SpeedMultiplier;
+                LocalPlayer.FpCharacter.jumpHeight = baseJumpHeight * Menu.JumpMultiplier;
+                LocalPlayer.FpCharacter.crouchSpeed = baseCrouchSpeed * Menu.SpeedMultiplier;
+                // LocalPlayer.FpCharacter.strafeSpeed = baseStrafeSpeed * Menu.SpeedMultiplier;
+                LocalPlayer.FpCharacter.swimmingSpeed = baseSwimmingSpeed * Menu.SpeedMultiplier;
+                LocalPlayer.FpCharacter.maxSwimVelocity = baseMaxSwimVelocity * Menu.SpeedMultiplier;
+            } else
             {
-                LocalPlayer.FpCharacter.walkSpeed = WalkSpeed;
-                LocalPlayer.FpCharacter.runSpeed = RunSpeed;
-                LocalPlayer.FpCharacter.swimmingSpeed = SwimSpeed;
-                //LocalPlayer.FpCharacter.strafeSpeed = strafeSpeed;
-                LocalPlayer.FpCharacter.crouchSpeed = CrouchSpeed;
+                GameStandardValues();
             }
-            
+
         }
     }
 }

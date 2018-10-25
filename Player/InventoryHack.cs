@@ -8,7 +8,7 @@ namespace Forest.Player
     {
         public void Update()
         {
-            if (Menu.InfiniteInventory)
+            if (Menu.InfiniteInventory && LocalPlayer.IsInWorld)
             {
                 foreach(TheForest.Items.Item item in TheForest.Items.ItemDatabase.Items)
                 {

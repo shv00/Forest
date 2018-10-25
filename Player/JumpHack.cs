@@ -9,9 +9,9 @@ namespace Forest.Player
 
         public void Update()
         {
-            if(Menu.JumpHack)
+            if(Menu.JumpHack && LocalPlayer.IsInWorld)
             {
-                LocalPlayer.FpCharacter.jumpHeight = JumpHeight * 20f; 
+                LocalPlayer.FpCharacter.jumpHeight = JumpHeight * Menu.JumpMultiplier; 
             } else
             {
                 LocalPlayer.FpCharacter.jumpHeight = JumpHeight;
